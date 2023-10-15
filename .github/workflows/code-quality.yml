@@ -27,6 +27,6 @@ jobs:
       - name: Create Pull Request
         run: gh pr create -B test -H dev --title 'Merge dev into test after flake8 code quality check' --body 'Created by Github action after flake8 code quality check'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
 
       
