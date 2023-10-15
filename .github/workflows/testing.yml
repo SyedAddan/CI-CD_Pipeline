@@ -27,4 +27,4 @@ jobs:
       - name: Create Pull Request
         run: gh pr create -B main -H test --title 'Merge test into main after test cases passed' --body 'Created by Github action after passing test cases'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
