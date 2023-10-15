@@ -41,6 +41,4 @@ jobs:
                     ```
                   to: ${{ secrets.EMAIL_TO }}
                   from: ${{ secrets.EMAIL_FROM }}
-
-
-                  
+  
