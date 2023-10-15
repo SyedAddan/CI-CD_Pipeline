@@ -23,3 +23,9 @@ jobs:
 
       - name: Run Flake8
         run: flake8 .
+      
+      - name: Create Pull Request
+        run: |
+          TOKEN="${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_REPOSITORY="${{ github.repository }}"
+          hub pull-request -b test -h dev -m "Automated Pull Request for Testing" -a syedaddan
