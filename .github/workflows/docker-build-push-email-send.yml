@@ -1,0 +1,44 @@
+name: Docker build push and Email send
+
+on:
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Docker Iamge Build
+              run: docker build -t ${{ secrets.DOCKER_USERNAME }}/ci-cd_pipeline:latest .
+
+            - name: Docker Login
+              run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+            - name: Docker push
+              run: docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd_pipeline:latest
+              
+            - name: Send email
+              uses: dawidd6/action-send-mail@v2
+              with:
+                  server_address: smtp.gmail.com
+                  server_port: 465
+                  username: ${{ secrets.EMAIL_USERNAME }}
+                  password: ${{ secrets.EMAIL_PASSWORD }}
+                  subject: A New Feature has been added to the CI/CD Pipeline
+                  body: \```
+                    Hello Syed,
+
+                    It's me, Jenkins, your trustee butler. I am here to inform you of the successful execution of my job. A new feature was implemented by one of the collaborators of the repo "SyedAddan/CI-CD_Pipeline" and it successfully went through all the hardships of quality testing from flake8 in the dev branch and the unit testing from the test cases written in the test branch and here we are in the main branch after building the docker image and pushing it to docker hub.
+                  
+                    Congrats!!! 🎉🎊
+                  
+                    Your trustee butler signing off,
+                    Adios
+                    ```
+                  to: ${{ secrets.EMAIL_TO }}
+                  from: ${{ secrets.EMAIL_FROM }}
+  
