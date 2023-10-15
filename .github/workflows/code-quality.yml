@@ -25,12 +25,7 @@ jobs:
         run: flake8 .
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: test
-          title: Automatically generated PR from dev to test
-          body: This pull request was automatically generated when code was pushed to the dev branch after the code quality check passed.
-          branch: dev
-          commit-message: Automatic PR from dev to test
+        run: gh pr create -B base_branch -H branch_to_merge --title 'Merge branch_to_merge into base_branch' --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
