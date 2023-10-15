@@ -1,0 +1,32 @@
+name: Code Quality Check
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: pip install flake8
+
+      - name: Run Flake8
+        run: flake8 .
+
+      - name: Create Pull Request
+        run: gh pr create -B test -H dev --title 'Merge dev into test after flake8 code quality check' --body 'Created by Github action after flake8 code quality check'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      
