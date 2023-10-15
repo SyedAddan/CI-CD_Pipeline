@@ -23,17 +23,3 @@ jobs:
 
       - name: Run Flake8
         run: flake8 .
-
-      - name: Install hub command
-        run: |
-          # Download and install the 'hub' command
-          wget https://github.com/github/hub/releases/download/v2.14.2/hub-linux-amd64-2.14.2.tgz
-          tar -xvf hub-linux-amd64-2.14.2.tgz
-          sudo cp hub-linux-amd64-2.14.2/bin/hub /usr/local/bin/hub
-          hub --version
-      
-      - name: Create Pull Request
-        run: |
-          TOKEN="${{ secrets.GITHUB_TOKEN }}"
-          GITHUB_REPOSITORY="${{ github.repository }}"
-          hub pull-request -b test -h dev -m "Automated Pull Request for Testing" -a syedaddan
